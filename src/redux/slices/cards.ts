@@ -62,6 +62,7 @@ export const cardsSlice = createSlice({
     restart: (state) => {
       state.score = 0;
       state.roundNumber = 0;
+      state.time = 0;
     },
 
     tick: (state, action: PayloadAction<number>) => {
