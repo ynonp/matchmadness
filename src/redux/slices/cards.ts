@@ -26,7 +26,7 @@ const initialState: CardsState = {
   roundCards: [],
   previousRoundCards: [],
   roundNumber: 0,  
-  score: 8,
+  score: 0,
 }
 
 export const cardsSlice = createSlice({

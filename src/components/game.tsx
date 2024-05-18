@@ -16,7 +16,7 @@ export function Game() {
   const allCards = useAppSelector(state => state.cards.cards);
   const round = useAppSelector(state => state.cards.roundNumber);
   const score = useAppSelector(state => state.cards.score);
-  const requiredScore = cards.length * 2;
+  const requiredScore = allCards.length * 2;
 
   if (allCards.length === 0) {
     return <p>No Cards...</p>

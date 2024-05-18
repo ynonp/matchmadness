@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <StoreProvider cards={cards}>      
-      <Game cards={[]} />      
+      <Game />
     </StoreProvider>
   );
 }
