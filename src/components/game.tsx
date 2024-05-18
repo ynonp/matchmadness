@@ -4,10 +4,11 @@ import _ from 'lodash';
 import PlayIcon from './ui/play_icon';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { cardsSlice, Card } from '@/redux/slices/cards';
-const {nextRound: nextRoundAction, restart} = cardsSlice.actions;
+const {nextRound: nextRoundAction, restart, tick} = cardsSlice.actions;
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from './ui/button';
 import { say } from '@/lib/utils';
+import { useEffect } from 'react';
 
 
 export function Game() {  
@@ -17,6 +18,7 @@ export function Game() {
   const round = useAppSelector(state => state.cards.roundNumber);
   const score = useAppSelector(state => state.cards.score);
   const requiredScore = allCards.length * 2;
+  const time = useAppSelector(state => state.cards.time / 1000);
 
   if (allCards.length === 0) {
     return <p>No Cards...</p>
@@ -28,8 +30,14 @@ export function Game() {
 
   return (
     <div className='flex flex-col h-screen w-screen overflow-hidden'>
-    <p className='text-right text-4xl px-12 py-4'>{score} / {requiredScore}</p>
+      <div className='flex flex-row'>
+        
+        <p className='text-left text-4xl px-12 py-4'>{time.toFixed(1)}</p>
+        <p className='ml-auto text-right text-4xl px-12 py-4'>{score} / {requiredScore}</p>
+      </div>
+    
     <div className='flex flex-col-reverse flex-1 mt-4'>      
+      {round > 0 && <Timer />}
       <AnimatePresence initial={false}>        
         <motion.div
           key={round}
@@ -93,11 +101,25 @@ function Round({roundCards, correctCard}: {
 }
 
 function EndRound() {
+  const time = useAppSelector(state => state.cards.time);
   const dispatch = useAppDispatch();
 
   return (<div className='h-screen w-screen flex flex-col justify-center align-middle'>
-    <p className='text-center py-4 text-4xl'>Bravo! You Win</p>
+    <p className='text-center py-4 text-4xl'>Bravo! You Win. Took {(time / 1000).toFixed(1)} Seconds</p>
     <Button className='w-40 mx-auto'
       onClick={() => dispatch(restart())}>Play Again</Button>
   </div>)
+}
+
+function Timer() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {    
+    const clock = setInterval(() => {      
+      dispatch(tick(100));
+    }, 100);
+
+    return () => clearInterval(clock);
+  }, []);
+
+  return (<></>)
 }

@@ -17,6 +17,7 @@ export interface CardsState {
   previousRoundCards: Array<Card>,
   roundNumber: number,
   score: number,
+  time: number,
 }
 
 const initialState: CardsState = {
@@ -27,6 +28,7 @@ const initialState: CardsState = {
   previousRoundCards: [],
   roundNumber: 0,  
   score: 0,
+  time: 0,
 }
 
 export const cardsSlice = createSlice({
@@ -59,6 +61,11 @@ export const cardsSlice = createSlice({
 
     restart: (state) => {
       state.score = 0;
+      state.roundNumber = 0;
+    },
+
+    tick: (state, action: PayloadAction<number>) => {
+      state.time += action.payload;
     }
   },
 })
