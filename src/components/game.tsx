@@ -27,13 +27,9 @@ export function Game() {
   }
 
   return (
-    <>
+    <div className='flex flex-col h-screen w-screen overflow-hidden'>
     <p className='text-right text-4xl px-12 py-4'>{score} / {requiredScore}</p>
-        <div style={{ display: 'flex',
-      flexFlow: 'column-reverse',
-      height: '100vh',
-      width: '100vw'}}
-    >      
+    <div className='flex flex-col-reverse flex-1 mt-4'>      
       <AnimatePresence initial={false}>        
         <motion.div
           key={round}
@@ -47,7 +43,7 @@ export function Game() {
         </motion.div>
         </AnimatePresence>
     </div>
-    </>
+    </div>
 
   )
 }
@@ -63,7 +59,7 @@ function Round({roundCards, correctCard}: {
   }
 
   return (
-    <div className='flex flex-col h-full justify-center'>
+    <div className='flex flex-col h-full'>
       
       <div className="text-center mb-4 text-4xl font-bold text-[#EF4444] dark:text-[#F87171]">
         {correctCard.text}
@@ -74,7 +70,7 @@ function Round({roundCards, correctCard}: {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-8">
         {roundCards.map(card => (
-                <div key={card.id} className="flex flex-col items-center justify-center space-y-4">
+                <div key={card.id} className="flex flex-col items-center space-y-4">
                   <div className="relative rounded-lg overflow-hidden aspect-square bg-[#FFF5F5] dark:bg-[#1F2937]">
                     <img
                       alt="Flashcard Image"
